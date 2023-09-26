@@ -2,9 +2,38 @@
 import { onMounted } from 'vue';
 import Header from './components/header.vue'
 
+//コールバック関数
+const callback = (entries) => {
+  entries.forEach((entry) => {
+    //監視対象の要素が指定した領域に入っている（見えている）場合
+    if (entry.isIntersecting) {
+      console.log(entry.target.classList + 'が見えています');
+      const classList = entry.target.classList.value
+      
+      if(classList.indexOf('make-line-height') >=0){
+        const text = document.querySelectorAll('#text-dummy');
+        for (let i = 0; i < text.length; i++) {
+          text[i].style.lineHeight = "1.5";
+          // text[i].removeAttribute('id')
+        }
+      }
+    } else {
+      console.log(entry.target.classList + 'は見えていません');
+    }
+  });
+}
+const observer = new IntersectionObserver(callback);
+
 onMounted(() => {
-  // const p = document.getElementsByTagName('p')[1];
-  // p.setAttribute('class', 'test')
+  window.onload = () => {
+    const target = document.getElementsByClassName('target')
+    console.log(target)
+    for (let n=0;n<target.length;n++){
+      observer.observe(target[n]);
+    }
+
+  }
+
 })
 </script>
 
@@ -12,24 +41,64 @@ onMounted(() => {
   <section class="hero-dummy is-large">
     <div class="hero-body-dummy">
       <div class="">
-        <img width="70%" src="./assets/img/DSC05986.JPG">
-        <p class="title is-primary">
+        <img id="top-image" src="./assets/img/DSC05986.JPG">
+        <h1 class="title is-1">
           CSS
-        </p>
-        <p class="subtitle">
+        </h1>
+        <h2 class="subtitle is-4">
           CSS
-        </p>
+        </h2>
       </div>
     </div>
   </section>
   
-  <section class="text-dummy">
-    <p>みなさん、こんにちは。初めまして。</p>
-    <p>突然ですが、今このページを開いてみて、みなさんはどんな感想を抱きましたか？</p>
-    <p>おそらく、「ダサい」「味気ない」と思ったのではないでしょうか。</p>
-    <p>それもそのはず。今このページはデザインや装飾を決定する<b>CSS</b>と呼ばれるファイルが<b>一切設定されていない</b>状態です。</p>
-    <p>と、言うわけで今回は、このまっさらな状態のページを私と一緒に装飾していきましょう！</p>
+  <section id="text-dummy" class="transition">
+    <p>
+      みなさん、こんにちは。初めまして。<br>
+      <br>
+      突然ですが、今このページを開いてみて、みなさんはどんな感想を抱きましたか？<br>
+      おそらく、「ダサい」「味気ない」「文字が読みにくい」……など、いろいろとネガティブな感想が浮かんだかもしれません。<br>
+      <br>
+      それもそのはず。今このページは<b>CSS</b>と呼ばれるファイルが<b>一切設定されていない</b>状態です。<br>
+      <br>
+      CSSは、ホームページなどのWeb上で見ることができるほぼすべてのデザインを設定するためのファイルのことです。<br>
+      <br>
+      ……と、そんなことを言われてもあまりピンと来ませんね。<br>
+      なので、今からこのページに実際にCSSを追加していき、CSSがどのようなはたらきをしているのか一緒に見てみましょう！<br>
+      <br>
+    </p>
+    <h1 class="title is-4">実際にCSSを変更してみよう</h1>
+    <p>
+      <br>
+      まずは文字が読みにくいのをどうにかしたいですね。<br>
+      文字の可読性はすなわち<b>Webページの命！</b><br>
+      ですのでひとまずこちらを最優先で進めていきましょう！<br>
+      <br>
+      このページの文字の可読性を下げている大きな要因として以下の3つが挙げられます。<br>
+      <br>
+      <div class="content">
+        <ol>
+          <li>行間が狭すぎる</li>
+          <li>背景と文字の色のコントラストが高すぎて目に負担がかかる</li>
+          <li>文字が左に寄りすぎている</li>
+        </ol>
+      </div>
+      <br>
+      上から順番に修正していきましょう。<br>
+      <br>
+      <br>
+      <br>
+    </p>
   </section>
+  <section id="text-dummy" class="make-line-height target transition">
+    <button @click="">行間を開ける</button>
+    <p>
+      <br>
+      いかがでしょうか。<br>
+      行間を開けるだけでもそれなりに読みやすさは向上したと思います。<br>
+    </p>
+  </section>
+
 
 </template>
 

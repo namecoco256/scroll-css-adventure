@@ -1,11 +1,21 @@
+html{
+  scroll-behavior: smooth;
+}
+.transition{
+  transition: 2s;
+}
 #top-image {
 	background-image: url(./assets/img/DSC05986.JPG);
 	background-size:cover;
 	background-color: rgba(0,0,0,0.4);
 }
-#top-image-dummy{
-	height:20%
+#top-image{
+	width:70%;
 }
 .title{
 	margin-bottom: 2em;
+}
+#text-dummy{
+  color:#000;
+  line-height: 1;
 }
