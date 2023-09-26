@@ -2,39 +2,33 @@
 import { onMounted } from 'vue';
 import Header from './components/header.vue'
 
-//コールバック関数
-const callback = (entries) => {
-  entries.forEach((entry) => {
-    //監視対象の要素が指定した領域に入っている（見えている）場合
-    if (entry.isIntersecting) {
-      console.log(entry.target.classList + 'が見えています');
-      const classList = entry.target.classList.value
-      
-      if(classList.indexOf('make-line-height') >=0){
-        const text = document.querySelectorAll('#text-dummy');
-        for (let i = 0; i < text.length; i++) {
-          text[i].style.lineHeight = "1.5";
-          // text[i].removeAttribute('id')
-        }
-      }
-    } else {
-      console.log(entry.target.classList + 'は見えていません');
-    }
-  });
-}
-const observer = new IntersectionObserver(callback);
-
 onMounted(() => {
   window.onload = () => {
     const target = document.getElementsByClassName('target')
     console.log(target)
-    for (let n=0;n<target.length;n++){
-      observer.observe(target[n]);
-    }
-
   }
-
 })
+function fontBigger() {
+  const p = document.querySelectorAll('#text-dummy p');
+  for (let i = 0; i < p.length; i++) {
+    p[i].style.fontSize = '1em'
+    // text[i].removeAttribute('id')
+  }
+}
+function makeLineHeight(){
+  const text = document.querySelectorAll('#text-dummy');
+  for (let i = 0; i < text.length; i++) {
+    text[i].style.lineHeight = "1.5";
+    // text[i].removeAttribute('id')
+  }
+}
+function removeTextDummy(){
+  const text = document.querySelectorAll('#text-dummy');
+  for (let i = 0; i < text.length; i++) {
+    text[i].removeAttribute('id')
+  }
+}
+
 </script>
 
 <template>
@@ -78,9 +72,9 @@ onMounted(() => {
       <br>
       <div class="content">
         <ol>
+          <li>文字が小さすぎる</li>
           <li>行間が狭すぎる</li>
           <li>背景と文字の色のコントラストが高すぎて目に負担がかかる</li>
-          <li>文字が左に寄りすぎている</li>
         </ol>
       </div>
       <br>
@@ -90,13 +84,19 @@ onMounted(() => {
       <br>
     </p>
   </section>
-  <section id="text-dummy" class="make-line-height target transition">
-    <button @click="">行間を開ける</button>
+  <section id="text-dummy" class="font-bigger transition">
+    <button @click="fontBigger">文字を大きくする</button>
+  </section>
+  <section id="text-dummy" class="make-line-height transition">
+    <button @click="makeLineHeight">行間を開ける</button>
     <p>
       <br>
       いかがでしょうか。<br>
       行間を開けるだけでもそれなりに読みやすさは向上したと思います。<br>
     </p>
+  </section>
+  <section id="text-dummy" class="remove-text-dummy">
+    <button @click="removeTextDummy">コントラストを下げる</button>
   </section>
 
 

@@ -19,3 +19,6 @@ html{
   color:#000;
   line-height: 1;
 }
+#text-dummy p{
+  font-size:0.9em;
+}
