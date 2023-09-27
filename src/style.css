@@ -21,7 +21,7 @@ html{
 }
 #text-dummy p{
   font-size:0.9em;
-  transition: 2s;
+  transition: 0.5s;
 }
 div.css-explanation{
   height:200px;
