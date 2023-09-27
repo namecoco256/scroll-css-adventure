@@ -117,7 +117,7 @@ watch(textDummyFlags, () => {
     <section class="transition css-explanation" v-if="!isTextDummy">
       <p>
         いかがでしょうか。<br>
-        具体的にどんなふうに変更がくわえられたかを解説していきます。<br>
+        具体的にどのような変更を加えたか解説していきます。<br>
         <br>
         まず、そのためには<b>HTML</b>の知識が必要ですね。<br>
         <br>
@@ -125,7 +125,36 @@ watch(textDummyFlags, () => {
         先に挙げたCSSを家の内装や装飾だとすれば、HTMLは家の骨組みに当たります。<br>
         <br>
         このページのHTMLファイルはこのようになっています。<br>
-
+        <br>
+        <pre><code>&lt;body&gt;
+  &lt;section class="hero is-large"&gt;
+    &lt;div class="hero-body"&gt;
+      &lt;div class=""&gt;
+        &lt;h1 class="title is-2"&gt;
+          見て学ぶWebデザイン超入門
+        &lt;/h1&gt;
+        &lt;h2 class="subtitle is-3"&gt;
+          CSSのはたらき
+        &lt;/h2&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class="introduction"&gt;
+    &lt;p&gt;
+      &lt;br&gt;
+      みなさん、こんにちは。初めまして。&lt;br&gt;
+      &lt;br&gt;
+      突然ですが、今このページを開いてみて、みなさんはどんな感想を抱きましたか？&lt;br&gt;
+      ……中略……
+    &lt;/p&gt;
+  &lt;/section&gt;
+&lt;/body&gt;</code></pre>
+        &lt;body&gt;…&lt;/body&gt; のような<b>タグ</b>と呼ばれる目印を使って文字を囲い、階層構造を表現しています。<br>
+        基本的にはこのタグに対してCSSを指定し、装飾を付け加えます。<br>
+        <br>
+        中には &lt;section class="introduction"&gt; のように、スペースを開けてclass=""が続いているタグがあります。<br>
+        これは、CSSで装飾をつけるための目印になり、このclassを指定して「この要素一つだけに装飾をつけたい」なんて時に使用します。<br>
+        <br>
       </p>
     </section>
     
