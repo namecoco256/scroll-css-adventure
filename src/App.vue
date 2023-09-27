@@ -1,6 +1,8 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, watch, ref } from 'vue';
 import Header from './components/header.vue'
+import navigatorText from './components/navigatorText.vue';
+import hljs from 'highlight.js'
 
 onMounted(() => {
   window.onload = () => {
@@ -8,27 +10,46 @@ onMounted(() => {
     console.log(target)
   }
 })
+const textDummyFlags = ref([false,false,false])
+const isTextDummy = ref(true)
+
 function fontBigger() {
   const p = document.querySelectorAll('#text-dummy p');
   for (let i = 0; i < p.length; i++) {
     p[i].style.fontSize = '1em'
     // text[i].removeAttribute('id')
   }
+  textDummyFlags.value[0] = true
 }
 function makeLineHeight(){
   const text = document.querySelectorAll('#text-dummy');
   for (let i = 0; i < text.length; i++) {
     text[i].style.lineHeight = "1.5";
-    // text[i].removeAttribute('id')
   }
+  textDummyFlags.value[1] = true
 }
-function removeTextDummy(){
+function changeColor(){
   const text = document.querySelectorAll('#text-dummy');
   for (let i = 0; i < text.length; i++) {
-    text[i].removeAttribute('id')
+    text[i].style.color = '#4a4a4a'
   }
+  textDummyFlags.value[2] = true
 }
+watch(textDummyFlags, () => {
+  console.log(textDummyFlags)
+  
+  if(textDummyFlags.value.every((val)=>{return val})){
+    const text = document.querySelectorAll('#text-dummy');
+    console.log(text)
+    for (let i = 0; i < text.length; i++) {
+      text[i].removeAttribute('id')
+    }
+    isTextDummy.value = false
 
+    const jumpTo = document.getElementsByClassName('css-explanation')[0]
+    jumpTo.scrollIntoView({behavior: 'smooth'})
+  }
+},{deep:true})
 </script>
 
 <template>
@@ -36,18 +57,19 @@ function removeTextDummy(){
     <div class="hero-body-dummy">
       <div class="">
         <img id="top-image" src="./assets/img/DSC05986.JPG">
-        <h1 class="title is-1">
-          CSS
+        <h1 class="title is-2">
+          見て学ぶWebデザイン超入門
         </h1>
-        <h2 class="subtitle is-4">
-          CSS
+        <h2 class="subtitle is-3">
+          CSSのはたらき
         </h2>
       </div>
     </div>
   </section>
   
-  <section id="text-dummy" class="transition">
+  <section id="text-dummy" class="transition introduction">
     <p>
+      <br>
       みなさん、こんにちは。初めまして。<br>
       <br>
       突然ですが、今このページを開いてみて、みなさんはどんな感想を抱きましたか？<br>
@@ -81,28 +103,46 @@ function removeTextDummy(){
       上から順番に修正していきましょう。<br>
       <br>
       <br>
+      <button @click="fontBigger">文字を大きくする</button><br>
       <br>
+      <button @click="makeLineHeight">行間を開ける</button><br>
+      <br>
+      <button @click="changeColor">コントラストを下げる</button><br>
+      <br>
+      
     </p>
   </section>
-  <section id="text-dummy" class="font-bigger transition">
-    <button @click="fontBigger">文字を大きくする</button>
-  </section>
-  <section id="text-dummy" class="make-line-height transition">
-    <button @click="makeLineHeight">行間を開ける</button>
-    <p>
-      <br>
-      いかがでしょうか。<br>
-      行間を開けるだけでもそれなりに読みやすさは向上したと思います。<br>
-    </p>
-  </section>
-  <section id="text-dummy" class="remove-text-dummy">
-    <button @click="removeTextDummy">コントラストを下げる</button>
-  </section>
+  <navigatorText text="(ボタンを全てクリックすると先に進みます)"></navigatorText><br>
+  <Transition>
+    <section class="transition css-explanation" v-if="!isTextDummy">
+      <p>
+        いかがでしょうか。<br>
+        具体的にどんなふうに変更がくわえられたかを解説していきます。<br>
+        <br>
+        まず、そのためには<b>HTML</b>の知識が必要ですね。<br>
+        <br>
+        HTMLとは、Webページの構成を設定するためのファイルです。<br>
+        先に挙げたCSSを家の内装や装飾だとすれば、HTMLは家の骨組みに当たります。<br>
+        <br>
+        このページのHTMLファイルはこのようになっています。<br>
 
-
+      </p>
+    </section>
+    
+  </Transition>
+  <div class='css-explanation' v-if="isTextDummy"></div>
 </template>
 
 <style lang="scss">
 @import "bulma/bulma.sass";
 
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 </style>
