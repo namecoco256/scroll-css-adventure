@@ -21,6 +21,7 @@ function fontBigger() {
   }
   textDummyFlags.value[0] = true
 }
+
 function makeLineHeight(){
   const text = document.querySelectorAll('#text-dummy');
   for (let i = 0; i < text.length; i++) {
@@ -28,13 +29,51 @@ function makeLineHeight(){
   }
   textDummyFlags.value[1] = true
 }
-function changeColor(){
+
+function addCardClass(){
   const text = document.querySelectorAll('#text-dummy');
   for (let i = 0; i < text.length; i++) {
-    text[i].style.color = '#4a4a4a'
+    text[i].classList.add('card-content')
   }
   textDummyFlags.value[2] = true
 }
+
+const isOverlapped = ref(false)
+function titleOverlap(){
+  const topImageDummy = document.querySelectorAll('#top-image-dummy')
+  for (let i = 0; i<topImageDummy.length; i++){
+    topImageDummy[i].remove()
+  }
+  const heroBody = document.querySelectorAll('.hero-body-dummy')
+  for (let i = 0; i<heroBody.length; i++){
+    heroBody[i].classList.remove('hero-body-dummy')
+    heroBody[i].classList.add('hero-body')
+  }
+  const hero = document.querySelectorAll('.hero-dummy')
+  for (let i = 0; i < hero.length; i++) {
+    hero[i].classList.remove('hero-dummy')
+    hero[i].classList.add('hero')
+  }
+  isOverlapped.value = true
+  const jumpTo = document.getElementsByClassName('title-image-darker')[0]
+  jumpTo.scrollIntoView({ behavior: 'smooth' })
+}
+function titleDarker(){
+  const title = document.getElementsByClassName('title is-2 transition')
+  for (let i = 0; i < title.length; i++){
+    title[i].classList.add('has-text-white')
+  }
+  const subtitle = document.getElementsByClassName('subtitle is-3 transition')
+  for (let i = 0; i < subtitle.length; i++){
+    subtitle[i].classList.add('has-text-light')
+  }
+  const heroBodyBefore = document.querySelectorAll('.hero-body:before')
+  console.log(heroBodyBefore)
+  for (let i = 0; i < heroBodyBefore.length; i++) {
+    heroBodyBefore[i].style.backgroundColor = 'rgba(0,0,0,0.4)'
+  }
+}
+
 watch(textDummyFlags, () => {
   console.log(textDummyFlags)
   
@@ -53,14 +92,14 @@ watch(textDummyFlags, () => {
 </script>
 
 <template>
-  <section class="hero-dummy is-large">
-    <div class="hero-body-dummy">
-      <div class="">
-        <img id="top-image" src="./assets/img/DSC05986.JPG">
-        <h1 class="title is-2">
+  <section class="hero-dummy is-fullheight transition">
+    <div class="hero-body-dummy transition">
+      <div>
+        <img id="top-image-dummy" class="transition" src="./assets/img/DSC05986.JPG">
+        <h1 class="title is-2 transition">
           見て学ぶWebデザイン超入門
         </h1>
-        <h2 class="subtitle is-3">
+        <h2 class="subtitle is-3 transition">
           CSS編
         </h2>
       </div>
@@ -83,7 +122,7 @@ watch(textDummyFlags, () => {
       なので、今からこのページに実際にCSSを追加していき、CSSがどのようなはたらきをしているのか一緒に見てみましょう！<br>
       <br>
     </p>
-    <h1 class="title is-4">実際にCSSを変更してみよう</h1>
+    <h1 class="title is-3">実際にCSSを変更してみよう</h1>
     <p>
       <br>
       まずは文字が読みにくいのをどうにかしたいですね。<br>
@@ -96,39 +135,43 @@ watch(textDummyFlags, () => {
         <ol>
           <li>文字が小さすぎる</li>
           <li>行間が狭すぎる</li>
-          <li>背景と文字の色のコントラストが高すぎて目に負担がかかる</li>
+          <li>文字が端に寄りすぎている</li>
         </ol>
       </div>
       <br>
-      上から順番に修正していきましょう。<br>
+      ひとつずつ修正していきましょう。<br>
       <br>
       <br>
       <button @click="fontBigger">文字を大きくする</button><br>
       <br>
       <button @click="makeLineHeight">行間を開ける</button><br>
       <br>
-      <button @click="changeColor">コントラストを下げる</button><br>
+      <button @click="addCardClass">文字を少し動かす</button><br>
       <br>
       
     </p>
+    <navigatorText text="(ボタンを全てクリックすると先に進みます)" v-if="isTextDummy"></navigatorText><br>
   </section>
-  <navigatorText text="(ボタンを全てクリックすると先に進みます)"></navigatorText><br>
+  
+  <div class='css-explanation temp' v-if="isTextDummy"></div>
   <Transition>
-    <section class="transition css-explanation" v-if="!isTextDummy">
-      <p>
-        いかがでしょうか。<br>
-        まだまだ気になる点は沢山ありますが、いくらか読みやすくはなりました。<br>
-        <br>
-        具体的にどのような変更を加えたか解説していきます。<br>
-        <br>
-        まず、そのためには<b>HTML</b>どのようなものなのかを軽く知っている必要があります。<br>
-        <h1 class="title is-4">HTMLについて</h1>
-        HTMLとは、Webページの構成を設定するためのファイルです。<br>
-        先に挙げたCSSを家の内装や装飾だとすれば、HTMLは家の骨組みに当たります。<br>
-        <br>
-        このページのHTMLファイルはこのようになっています。<br>
-        <br>
-        <pre><code class="language-html">&lt;body&gt;
+    <section class="transition css-explanation card-dummy" v-if="!isTextDummy">
+      <div class="card-content">
+        <p>
+          いかがでしょうか。<br>
+          まだまだ気になる点は沢山ありますが、いくらか読みやすくはなりました。<br>
+          <br>
+          具体的にどのような変更を加えたか解説していきます。<br>
+          <br>
+          まず、そのためには<b>HTML</b>どのようなものなのかを軽く知っている必要があります。<br>
+          <br>
+          <h1 class="title is-3">HTMLについて</h1>
+          HTMLは、ウェブページの構造を設定するためのファイル形式です。<br>
+          CSSが家の内装や装飾にたとえられるなら、HTMLはその家の骨組みに相当します。<br>
+          <br>
+          このページのHTMLファイルは以下のようになっています。<br>
+          <br>
+          <pre><code class="language-html">&lt;body&gt;
   &lt;section class="hero is-large"&gt;
     &lt;div class="hero-body"&gt;
       &lt;div class=""&gt;
@@ -152,70 +195,86 @@ watch(textDummyFlags, () => {
   &lt;/section&gt;
 &lt;/body&gt;</code></pre>
         <br>
-        &lt;body&gt;…&lt;/body&gt; のような<b>タグ</b>と呼ばれる目印を使って文字を囲い、階層構造を表現しています。<br>
-        基本的にはこのタグに対してCSSを指定し、装飾を付け加えます。<br>
+        HTMLでは、テキストを<b>タグ</b>と呼ばれる目印(&lt;body&gt;のような形式)で囲むことで階層構造を表現します。通常、これらのタグに対してCSSを適用して装飾を追加します。
         <br>
-        中には &lt;section class="introduction"&gt; のように、スペースを開けてclass=""が続いているタグがあります。<br>
-        これは、CSSで装飾をつけるための目印になり、このclassを指定して「この要素一つだけに装飾をつけたい」なんて時に使用します。<br>
+        一部のタグは &lt;section class="introduction"&gt; のように、属性を持っています。(タグの中のスペースの右側についている、この例だと『class="introduction"』の部分です)<br>
         <br>
-        さて、次に先ほど追加したCSSがどんなものだったか見てみましょう。<br>
+        この<b>属性</b>は、CSSで特定の装飾を適用する際の目印として使用されます。<br>
         <br>
-        <pre><code class="language-html">p{
+        さて、ここで先ほど追加したCSSについて詳しく見てみましょう。<br>
+        <br>
+        <pre><code class="language-css">p{
   font-size: 1em;
   line-height: 1.5;
   color: #4a4a4a;
 }</code></pre>
-        <br>
-        先頭に p、その次に波括弧、波括弧の中に見た目についての設定が書かれています。<br>
-        ここで、HTMLファイルをもう一度見てみましょう。<br>
-        &lt;p&gt; というタグで囲われた部分が見つかるはずです。<br>
-        <br>
-        つまり、このCSSは、「pの中のものを波括弧の中で指示しているように装飾しなさい」という意味になります。<br>
-        波括弧の中身の内容は一番上から、
-        <div class="content">
-          <ol>
-            <li>フォントのサイズ</li>
-            <li>行と行の間隔</li>
-            <li>文字の色</li>
-          </ol>
-        </div>
-        の設定となっています。<br>
-        :(コロン)の後ろの数字が、その設定のパラメーターに当たります。<br>
-        <br>
-        例えば、font-size:に続く <b>1em</b>が、文字のサイズをどれくらいにするか。という数字です。<br>
-        あまり聞きなじみのない単位かもしれませんが、ここではそこまで気にする必要はありません。<br>
-        <br>
-        ……さて、ここまで難しい話が続きましたが、無理に覚える必要はありません。<br>
-        ここからは、気になるポイントや、もっとおしゃれにできるポイントをどんどんと書き換えていきましょう！<br>
-      </p>
+          <br>
+          このCSSファイルでは、『p』 タグに適用される見た目の設定が記述されています。この設定は、『p』 タグで囲まれたテキストに適用されます。
+          <br>
+          具体的な設定内容は以下の通りです。<br>
+          <div class="content">
+            <ol>
+              <li>フォントのサイズ</li>
+              <li>行間の設定</li>
+              <li>文字の色</li>
+            </ol>
+          </div>
+          それぞれの設定値はコロンの後に記述されており、たとえば `font-size:` の後には文字のサイズを指定する値（単位として `em` を使用）が続きます。<br>
+          (この単位についてはあまり気にしなくても構いません。)<br>
+          <br>
+          ……少し技術的な話をしてしまいましたが、無理に覚える必要はありません。<br>
+          この次は、ウェブページをより魅力的にする方法や重要なポイントに焦点を当てて学んでいきましょう！<br>
+          <br>
+        </p>
+      </div>
     </section>
   </Transition>
   <Transition>
-    <section class="title-fix" v-if="!isTextDummy">
+    <section class="title-fix card-content transition" v-if="!isTextDummy">
       <h1 class="title is-4">もっとデザインを書き換えよう！</h1>
       <p>
         次は……そうですね、このページの一番上のタイトルが崩れてるのを直したいです。<br>
-        直接読みやすさに関与する部分ではありませんが、ページにアクセスしたユーザーが一番最初に見る部分ですので、<br>
-        ここが崩れているのは極力避けたいです。<br>
+        <br>
+        利便性や可読性に直接関与する部分ではありませんが、ページにアクセスしたユーザーが一番最初に見る部分ですので、<br>
+        ここが崩れているのはあまりよろしくありません。<br>
         <br>
         上のタイトルと全く同じものをここに用意しました↓
-        <section class="hero-dummy is-large">
-          <div class="hero-body-dummy">
-            <div class="">
-              <img id="top-image" src="./assets/img/DSC05986.JPG">
-              <h1 class="title is-2">
-                見て学ぶWebデザイン超入門
-              </h1>
-              <h2 class="subtitle is-3">
-                CSS編
-              </h2>
-            </div>
-          </div>
-        </section>
       </p>
     </section>
   </Transition>
-  <div class='css-explanation' v-if="isTextDummy"></div>
+    <section class="hero-dummy is-fullheight" v-if="!isTextDummy">
+      <div class="hero-body-dummy transition">
+        <div>
+          <img id="top-image-dummy" class="transition" src="./assets/img/DSC05986.JPG">
+          <h1 class="title is-2 transition">
+            見て学ぶWebデザイン超入門
+          </h1>
+          <h2 class="subtitle is-3 transition">
+            CSS編
+          </h2>
+        </div>
+      </div>
+    </section>
+    <section class='card-content' v-if="!isTextDummy">
+      <p>
+        <br>
+        とりあえず、文字と画像は重なっていた方がカッコイイ気がします。<br>
+        <br>
+        <button @click="titleOverlap">重ねる</button>
+      </p>
+      <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isOverlapped && isTextDummy"></navigatorText><br>
+    </section>
+  <div class='title-image-darker temp' v-if="!isOverlapped"></div>
+  <Transition>
+    <section class="title-image-darker card-content" v-if="isOverlapped && !isTextDummy">
+      <p>
+        文字と後ろの画像が被ってしまって少し読みにくいですね。<br>
+        そんな時は文字の色を白くしましょう。後ろの画像の色味が暗いため、それだけでかなり読みやすくなります。<br>
+        <br>
+        <button @click="titleDarker">色を変える</button>
+      </p>
+    </section>
+  </Transition>
 </template>
 
 <style lang="scss">
@@ -223,7 +282,7 @@ watch(textDummyFlags, () => {
 
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 2s ease;
 }
 
 .v-enter-from,

@@ -1,15 +1,32 @@
 html{
   scroll-behavior: smooth;
 }
+body{
+  color:hsl(0, 0%, 14%) !important;
+}
 .transition{
   transition: 2s;
 }
-#top-image {
-	background-image: url(./assets/img/DSC05986.JPG);
-	background-size:cover;
-	background-color: rgba(0,0,0,0.4);
+.hero-body{
+  background-image: url(./assets/img/DSC05986.JPG);
+  background-size: cover;
+  position: relative;
 }
-#top-image{
+.hero-body div{
+  position: absolute;
+
+}
+.hero-body:before{
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+}
+
+#top-image-dummy{
 	width:70%;
 }
 .title{
@@ -23,6 +40,6 @@ html{
   font-size:0.9em;
   transition: 0.5s;
 }
-div.css-explanation{
+div.temp{
   height:200px;
 }
