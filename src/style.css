@@ -5,7 +5,7 @@ body{
   color:hsl(0, 0%, 14%) !important;
 }
 .transition{
-  transition: 2s;
+  transition: 1s;
 }
 .hero-body{
   background-image: url(./assets/img/DSC05986.JPG);

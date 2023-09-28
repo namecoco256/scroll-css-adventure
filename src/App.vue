@@ -31,9 +31,10 @@ function makeLineHeight(){
 }
 
 function addCardClass(){
-  const text = document.querySelectorAll('#text-dummy');
+  const text = document.querySelectorAll('.card-content-dummy');
   for (let i = 0; i < text.length; i++) {
     text[i].classList.add('card-content')
+    text[i].classList.remove('card-content-dummy')
   }
   textDummyFlags.value[2] = true
 }
@@ -55,9 +56,9 @@ function titleOverlap(){
     hero[i].classList.add('hero')
   }
   isOverlapped.value = true
-  const jumpTo = document.getElementsByClassName('title-image-darker')[0]
-  jumpTo.scrollIntoView({ behavior: 'smooth' })
 }
+
+const isTitleDarked = ref(false)
 function titleDarker(){
   const title = document.getElementsByClassName('title is-2 transition')
   for (let i = 0; i < title.length; i++){
@@ -72,6 +73,10 @@ function titleDarker(){
   for (let i = 0; i < heroBodyBefore.length; i++) {
     heroBodyBefore[i].style.backgroundColor = 'rgba(0,0,0,0.4)'
   }
+  const jumpTo = document.getElementsByClassName('hero-body')[1]
+  jumpTo.scrollIntoView({ behavior: 'smooth' })
+
+  isTitleDarked = true
 }
 
 watch(textDummyFlags, () => {
@@ -92,7 +97,7 @@ watch(textDummyFlags, () => {
 </script>
 
 <template>
-  <section class="hero-dummy is-fullheight transition">
+  <section class="hero-dummy is-large transition">
     <div class="hero-body-dummy transition">
       <div>
         <img id="top-image-dummy" class="transition" src="./assets/img/DSC05986.JPG">
@@ -107,49 +112,51 @@ watch(textDummyFlags, () => {
   </section>
   
   <section id="text-dummy" class="transition introduction">
-    <p>
-      <br>
-      みなさん、こんにちは。初めまして。<br>
-      <br>
-      突然ですが、今このページを開いてみて、みなさんはどんな感想を抱きましたか？<br>
-      おそらく、「ダサい」「味気ない」「文字が読みにくい」……など、いろいろとネガティブな感想が浮かんだかもしれません。<br>
-      <br>
-      それもそのはず。今このページは<b>CSS</b>と呼ばれるファイルが<b>一切設定されていない</b>状態です。<br>
-      <br>
-      CSSは、ホームページなどのWeb上で見ることができるほぼすべてのデザインを設定するためのファイルのことです。<br>
-      <br>
-      ……と、そんなことを言われてもあまりピンと来ませんね。<br>
-      なので、今からこのページに実際にCSSを追加していき、CSSがどのようなはたらきをしているのか一緒に見てみましょう！<br>
-      <br>
-    </p>
-    <h1 class="title is-3">実際にCSSを変更してみよう</h1>
-    <p>
-      <br>
-      まずは文字が読みにくいのをどうにかしたいですね。<br>
-      文字の可読性はすなわち<b>Webページの命！</b><br>
-      ですのでひとまずこちらを最優先で進めていきましょう！<br>
-      <br>
-      このページの文字の可読性を下げている大きな要因として以下の3つが挙げられます。<br>
-      <br>
-      <div class="content">
-        <ol>
-          <li>文字が小さすぎる</li>
-          <li>行間が狭すぎる</li>
-          <li>文字が端に寄りすぎている</li>
-        </ol>
-      </div>
-      <br>
-      ひとつずつ修正していきましょう。<br>
-      <br>
-      <br>
-      <button @click="fontBigger">文字を大きくする</button><br>
-      <br>
-      <button @click="makeLineHeight">行間を開ける</button><br>
-      <br>
-      <button @click="addCardClass">文字を少し動かす</button><br>
-      <br>
-      
-    </p>
+    <div class="card-content-dummy transition">
+      <p>
+        <br>
+        みなさん、こんにちは。初めまして。<br>
+        <br>
+        突然ですが、今このページを開いてみて、みなさんはどんな感想を抱きましたか？<br>
+        おそらく、「ダサい」「味気ない」「文字が読みにくい」……など、いろいろとネガティブな感想が浮かんだかもしれません。<br>
+        <br>
+        それもそのはず。今このページは<b>CSS</b>と呼ばれるファイルが<b>一切設定されていない</b>状態です。<br>
+        <br>
+        CSSは、ホームページなどのWeb上で見ることができるほぼすべてのデザインを設定するためのファイルのことです。<br>
+        <br>
+        ……と、そんなことを言われてもあまりピンと来ませんね。<br>
+        なので、今からこのページに実際にCSSを追加していき、CSSがどのようなはたらきをしているのか一緒に見てみましょう！<br>
+        <br>
+      </p>
+      <h1 class="title is-3">実際にCSSを変更してみよう</h1>
+      <p>
+        <br>
+        まずは文字が読みにくいのをどうにかしたいですね。<br>
+        文字の可読性はすなわち<b>Webページの命！</b><br>
+        ですのでひとまずこちらを最優先で進めていきましょう！<br>
+        <br>
+        このページの文字の可読性を下げている大きな要因として以下の3つが挙げられます。<br>
+        <br>
+        <div class="content">
+          <ol>
+            <li>文字が小さすぎる</li>
+            <li>行間が狭すぎる</li>
+            <li>文字が端に寄りすぎている</li>
+          </ol>
+        </div>
+        <br>
+        ひとつずつ修正していきましょう。<br>
+        <br>
+        <br>
+        <button @click="fontBigger">文字を大きくする</button><br>
+        <br>
+        <button @click="makeLineHeight">行間を開ける</button><br>
+        <br>
+        <button @click="addCardClass">文字を少し動かす</button><br>
+        <br>
+        
+      </p>
+    </div>
     <navigatorText text="(ボタンを全てクリックすると先に進みます)" v-if="isTextDummy"></navigatorText><br>
   </section>
   
@@ -167,7 +174,7 @@ watch(textDummyFlags, () => {
           <br>
           <h1 class="title is-3">HTMLについて</h1>
           HTMLは、ウェブページの構造を設定するためのファイル形式です。<br>
-          CSSが家の内装や装飾にたとえられるなら、HTMLはその家の骨組みに相当します。<br>
+          CSSが家の内装や装飾にたとえるなら、HTMLはその家の骨組みに相当します。<br>
           <br>
           このページのHTMLファイルは以下のようになっています。<br>
           <br>
@@ -242,7 +249,7 @@ watch(textDummyFlags, () => {
       </p>
     </section>
   </Transition>
-    <section class="hero-dummy is-fullheight" v-if="!isTextDummy">
+    <section class="hero-dummy is-large" v-if="!isTextDummy">
       <div class="hero-body-dummy transition">
         <div>
           <img id="top-image-dummy" class="transition" src="./assets/img/DSC05986.JPG">
