@@ -80,16 +80,70 @@ function titleDarker(){
   isTitleDarked.value = true
 }
 
-const isApplyCard = ref(false)
-function toCard(){
-  const card = document.querySelectorAll('.card-dummy')
-  console.log(card)
-  for (let i = 0; i < card.length; i++) {
-    card[i].classList.add('card')
-    card[i].classList.remove('card-dummy')
+const isChangeButton = ref(false)
+function changeButton(){
+  const button = document.querySelectorAll('button')
+  console.log(button)
+  for (let i = 0; i < button.length; i++) {
+    button[i].classList.add('button')
+    button[i].classList.add('is-outlined')
   }
-  isApplyCard.value = true
+  isChangeButton.value = true
 }
+
+const isChangedButtonColor = ref(false)
+const selectedColor = ref('白黒')
+let currentColor = ''
+watch(selectedColor, ()=>{
+  console.log(selectedColor)
+  const button = document.querySelectorAll('button')
+
+  for (let i = 0; i < button.length; i++) {
+    button[i].classList.remove('is-' + currentColor)
+  }
+  switch(selectedColor.value){
+    case '白黒':
+      currentColor = ''
+      break
+    case '青緑':
+      currentColor = 'primary'
+      for (let i = 0; i < button.length; i++) {
+        button[i].classList.add('is-' + currentColor)
+      }
+      break
+    case '青':
+      currentColor = 'link'
+      for (let i = 0; i < button.length; i++) {
+        button[i].classList.add('is-' + currentColor)
+      }
+      break
+    case '水色':
+      currentColor = 'info'
+      for (let i = 0; i < button.length; i++) {
+        button[i].classList.add('is-' + currentColor)
+      }
+      break
+    case '緑':
+      currentColor = 'success'
+      for (let i = 0; i < button.length; i++) {
+        button[i].classList.add('is-' + currentColor)
+      }
+      break
+    case '黄色':
+      currentColor = 'warning'
+      for (let i = 0; i < button.length; i++) {
+        button[i].classList.add('is-' + currentColor)
+      }
+      break
+    case '赤':
+      currentColor = 'danger'
+      for (let i = 0; i < button.length; i++) {
+        button[i].classList.add('is-' + currentColor)
+      }
+      break
+  }
+  isChangedButtonColor.value = true
+})
 
 watch(textDummyFlags, () => {
   console.log(textDummyFlags)
@@ -110,7 +164,7 @@ watch(textDummyFlags, () => {
 
 <template>
   <hero />
-  <section id="text-dummy" class="transition introduction main-text card-dummy">
+  <section id="text-dummy" class="transition introduction main-text ">
     <div class="card-content-dummy transition main-text">
       <p>
         <br>
@@ -129,7 +183,7 @@ watch(textDummyFlags, () => {
       </p>
     </div>
   </section>
-  <section id="text-dummy" class="transition introduction main-text card-dummy">
+  <section id="text-dummy" class="transition introduction main-text ">
     <div class="card-content-dummy transition main-text">
       <h1 class="title is-3">実際にCSSを変更してみよう</h1>
       <p>
@@ -165,7 +219,7 @@ watch(textDummyFlags, () => {
   
   <div class='css-explanation temp' v-if="isTextDummy"></div>
   <Transition>
-    <section class="transition css-explanation card-dummy main-text" v-if="!isTextDummy">
+    <section class="transition css-explanation  main-text" v-if="!isTextDummy">
       <div class="card-content">
         <p>
           いかがでしょうか。<br>
@@ -180,7 +234,7 @@ watch(textDummyFlags, () => {
     </section>
   </Transition>
   <Transition>
-    <section class="transition css-explanation card-dummy main-text" v-if="!isTextDummy">
+    <section class="transition css-explanation  main-text" v-if="!isTextDummy">
       <div class="card-content">
         <h1 class="title is-3">HTMLについて</h1>
         <p>
@@ -248,7 +302,7 @@ watch(textDummyFlags, () => {
     </section>
   </Transition>
   <Transition>
-    <section class="title-fix card-dummy transition main-text" v-if="!isTextDummy">
+    <section class="title-fix  transition main-text" v-if="!isTextDummy">
       <div class="card-content">
         <h1 class="title is-4">もっとデザインを書き換えよう！</h1>
         <p>
@@ -264,7 +318,7 @@ watch(textDummyFlags, () => {
   </Transition>
   <hero v-if="!isTextDummy"/>
 
-  <section class='card-dummy main-text transition' v-if="!isTextDummy">
+  <section class=' main-text transition' v-if="!isTextDummy">
     <div class="card-content">
     <p>
       <br>
@@ -277,13 +331,13 @@ watch(textDummyFlags, () => {
   </section>
   <div class='title-image-darker temp' v-if="!isOverlapped"></div>
   <Transition>
-    <section class="title-image-darker card-dummy main-text transition" v-if="isOverlapped && !isTextDummy">
+    <section class="title-image-darker  main-text transition" v-if="isOverlapped && !isTextDummy">
       <div class='card-content'>
         <p>
           ……うーん、文字の色が画像の色に似ていて、読みにくさを感じます。<br>
           <br>
           色についても考えてみましょう。<br>
-          この画像は比較的暗い色が大部分なので、文字の色は明るい白色が適しています。<br>
+          この画像は比較的暗い色が大部分なので、文字の色には明るい白色が適しています。<br>
           <br>
           <button @click="titleDarker">色を変える</button>
         </p>
@@ -294,31 +348,72 @@ watch(textDummyFlags, () => {
   
   <Transition>
 
-    <section class="card-dummy main-text transition" v-if="isTitleDarked && isOverlapped && !isTextDummy">
+    <section class=" main-text transition" v-if="isTitleDarked && isOverlapped && !isTextDummy">
       <div class="card-content">
         <p>
           いいですね！<br>
-          これで、文字と背景のコントラストが上がり、よりオシャレかつ視認性の高いデザインになりました。<br>
-          <br>
+          これにより文字と背景のコントラストが上がり、よりオシャレかつ視認性の高いデザインになりました。<br>
         </p>
       </div>
     </section>
   </Transition>
   <Transition>
-    <section class="card-dummy main-text transition" v-if="isTitleDarked && isOverlapped && !isTextDummy">
+    <section class="main-text transition" v-if="isTitleDarked && isOverlapped && !isTextDummy">
       <div class="card-content">
         <p>
-          次は、本文にちょっとリッチな装飾をつけてみます。<br>
+          最後に、ボタンのデザインを変えましょう。<br>
+          現在はブラウザに初期から入っているデザインがそのまま使用しています。<br>
+          これを別なデザインに変更してみましょう。<br>
           <br>
-          <a href="https://bulma.io">Bulma</a>というライブラリ(Webページを作るうえでのパーツ集のようなもの)を使ってみましょう。<br>
-          本文に<a href='https://bulma.io/documentation/components/card/'>Card</a>というパーツを適用します。
+          試しに枠線だけのシンプルなデザインのものにしてみます。<br>
+          <br>
         </p>
-        <button @click="toCard">適用</button>
+        <button @click="changeButton">ボタンを変える</button>
+      </div>
+      <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isChangeButton && isTitleDarked && isOverlapped && !isTextDummy"></navigatorText><br>
+    </section>
+  </Transition>
+  <Transition>
+    <section class="main-text transition" v-if="isChangeButton && isTitleDarked && isOverlapped && !isTextDummy">
+      <div class="card-content">
+        <p>
+          どうでしょうか。<br>
+          この辺りは個人の好みによるかもしれません。<br>
+          <br>
+          いくつか選択肢を用意しておきましたので、お好きな色に変えてみてください。<br>
+          <br>
+          <div class="select">
+            <select v-model="selectedColor">
+              <option>白黒</option>
+              <option>青緑</option>
+              <option>青</option>
+              <option>水色</option>
+              <option>緑</option>
+              <option>黄色</option>
+              <option>赤</option>
+            </select>
+          </div>
+        </p>
+      </div>
+      <navigatorText text="(色を変更すると先に進みます)" v-if="!isChangedButtonColor && isChangeButton && isTitleDarked && isOverlapped && !isTextDummy"></navigatorText><br>
+    </section>
+  </Transition>
+  <Transition>
+    <section class="main-text transition" v-if="isChangedButtonColor && isChangeButton && isTitleDarked && isOverlapped && !isTextDummy">
+      <div class="card-content">
+        <h1 class="title is-3">終わりに</h1>
+        <p>
+          ここまでの閲覧、本当にありがとうございます。<br>
+          今このページの一番最初に戻ると、読みやすさが断然上がっていると思います。<br>
+          <br>
+          このページを通じてWebデザインについて興味を持っていただけたならとても幸いです。
+        </p>
       </div>
     </section>
   </Transition>
+
   <Template>
-    
+
   </Template>
 </template>
 
