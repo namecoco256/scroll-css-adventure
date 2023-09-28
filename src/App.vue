@@ -3,6 +3,7 @@ import { onMounted, watch, ref } from 'vue';
 import Header from './components/header.vue'
 import navigatorText from './components/navigatorText.vue';
 import hljs from 'highlight.js'
+import hero from './components/hero.vue'
 
 onMounted(() => {
   window.onload = () => {
@@ -76,7 +77,18 @@ function titleDarker(){
   const jumpTo = document.getElementsByClassName('hero-body')[1]
   jumpTo.scrollIntoView({ behavior: 'smooth' })
 
-  isTitleDarked = true
+  isTitleDarked.value = true
+}
+
+const isApplyCard = ref(false)
+function toCard(){
+  const card = document.querySelectorAll('.card-dummy')
+  console.log(card)
+  for (let i = 0; i < card.length; i++) {
+    card[i].classList.add('card')
+    card[i].classList.remove('card-dummy')
+  }
+  isApplyCard.value = true
 }
 
 watch(textDummyFlags, () => {
@@ -97,22 +109,9 @@ watch(textDummyFlags, () => {
 </script>
 
 <template>
-  <section class="hero-dummy is-large transition">
-    <div class="hero-body-dummy transition">
-      <div>
-        <img id="top-image-dummy" class="transition" src="./assets/img/DSC05986.JPG">
-        <h1 class="title is-2 transition">
-          見て学ぶWebデザイン超入門
-        </h1>
-        <h2 class="subtitle is-3 transition">
-          CSS編
-        </h2>
-      </div>
-    </div>
-  </section>
-  
-  <section id="text-dummy" class="transition introduction">
-    <div class="card-content-dummy transition">
+  <hero />
+  <section id="text-dummy" class="transition introduction main-text card-dummy">
+    <div class="card-content-dummy transition main-text">
       <p>
         <br>
         みなさん、こんにちは。初めまして。<br>
@@ -128,6 +127,10 @@ watch(textDummyFlags, () => {
         なので、今からこのページに実際にCSSを追加していき、CSSがどのようなはたらきをしているのか一緒に見てみましょう！<br>
         <br>
       </p>
+    </div>
+  </section>
+  <section id="text-dummy" class="transition introduction main-text card-dummy">
+    <div class="card-content-dummy transition main-text">
       <h1 class="title is-3">実際にCSSを変更してみよう</h1>
       <p>
         <br>
@@ -162,7 +165,7 @@ watch(textDummyFlags, () => {
   
   <div class='css-explanation temp' v-if="isTextDummy"></div>
   <Transition>
-    <section class="transition css-explanation card-dummy" v-if="!isTextDummy">
+    <section class="transition css-explanation card-dummy main-text" v-if="!isTextDummy">
       <div class="card-content">
         <p>
           いかがでしょうか。<br>
@@ -172,7 +175,15 @@ watch(textDummyFlags, () => {
           <br>
           まず、そのためには<b>HTML</b>どのようなものなのかを軽く知っている必要があります。<br>
           <br>
-          <h1 class="title is-3">HTMLについて</h1>
+        </p>
+      </div>
+    </section>
+  </Transition>
+  <Transition>
+    <section class="transition css-explanation card-dummy main-text" v-if="!isTextDummy">
+      <div class="card-content">
+        <h1 class="title is-3">HTMLについて</h1>
+        <p>
           HTMLは、ウェブページの構造を設定するためのファイル形式です。<br>
           CSSが家の内装や装飾にたとえるなら、HTMLはその家の骨組みに相当します。<br>
           <br>
@@ -201,16 +212,16 @@ watch(textDummyFlags, () => {
     &lt;/p&gt;
   &lt;/section&gt;
 &lt;/body&gt;</code></pre>
-        <br>
-        HTMLでは、テキストを<b>タグ</b>と呼ばれる目印(&lt;body&gt;のような形式)で囲むことで階層構造を表現します。通常、これらのタグに対してCSSを適用して装飾を追加します。
-        <br>
-        一部のタグは &lt;section class="introduction"&gt; のように、属性を持っています。(タグの中のスペースの右側についている、この例だと『class="introduction"』の部分です)<br>
-        <br>
-        この<b>属性</b>は、CSSで特定の装飾を適用する際の目印として使用されます。<br>
-        <br>
-        さて、ここで先ほど追加したCSSについて詳しく見てみましょう。<br>
-        <br>
-        <pre><code class="language-css">p{
+          <br>
+          HTMLでは、テキストを<b>タグ</b>と呼ばれる目印(&lt;body&gt;のような形式)で囲むことで階層構造を表現します。通常、これらのタグに対してCSSを適用して装飾を追加します。
+          <br>
+          一部のタグは &lt;section class="introduction"&gt; のように、属性を持っています。(タグの中のスペースの右側についている、この例だと『class="introduction"』の部分です)<br>
+          <br>
+          この<b>属性</b>は、CSSで特定の装飾を適用する際の目印として使用されます。<br>
+          <br>
+          さて、ここで先ほど追加したCSSについて詳しく見てみましょう。<br>
+          <br>
+          <pre><code class="language-css">p{
   font-size: 1em;
   line-height: 1.5;
   color: #4a4a4a;
@@ -237,51 +248,78 @@ watch(textDummyFlags, () => {
     </section>
   </Transition>
   <Transition>
-    <section class="title-fix card-content transition" v-if="!isTextDummy">
-      <h1 class="title is-4">もっとデザインを書き換えよう！</h1>
-      <p>
-        次は……そうですね、このページの一番上のタイトルが崩れてるのを直したいです。<br>
-        <br>
-        利便性や可読性に直接関与する部分ではありませんが、ページにアクセスしたユーザーが一番最初に見る部分ですので、<br>
-        ここが崩れているのはあまりよろしくありません。<br>
-        <br>
-        上のタイトルと全く同じものをここに用意しました↓
-      </p>
-    </section>
-  </Transition>
-    <section class="hero-dummy is-large" v-if="!isTextDummy">
-      <div class="hero-body-dummy transition">
-        <div>
-          <img id="top-image-dummy" class="transition" src="./assets/img/DSC05986.JPG">
-          <h1 class="title is-2 transition">
-            見て学ぶWebデザイン超入門
-          </h1>
-          <h2 class="subtitle is-3 transition">
-            CSS編
-          </h2>
-        </div>
+    <section class="title-fix card-dummy transition main-text" v-if="!isTextDummy">
+      <div class="card-content">
+        <h1 class="title is-4">もっとデザインを書き換えよう！</h1>
+        <p>
+          次は……そうですね、このページの一番上にあるタイトルが崩れているのを修正したいと思います。<br>
+          <br>
+          この部分は利便性や可読性に直接関わるわけではありませんが、<br>
+          ユーザーが最初に目にする部分であるため、綺麗に整えておくことが重要です。<br>
+          <br>
+          タイトルのクローンをここに用意しました :
+        </p>
       </div>
     </section>
-    <section class='card-content' v-if="!isTextDummy">
-      <p>
-        <br>
-        とりあえず、文字と画像は重なっていた方がカッコイイ気がします。<br>
-        <br>
-        <button @click="titleOverlap">重ねる</button>
-      </p>
-      <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isOverlapped && isTextDummy"></navigatorText><br>
-    </section>
+  </Transition>
+  <hero v-if="!isTextDummy"/>
+
+  <section class='card-dummy main-text transition' v-if="!isTextDummy">
+    <div class="card-content">
+    <p>
+      <br>
+      タイトル名と画像の配置が大幅にずれているので、これらを重ねて配置しましょう。<br>
+      <br>
+      <button @click="titleOverlap">重ねる</button>
+    </p>
+    <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isOverlapped && isTextDummy"></navigatorText><br>
+    </div>
+  </section>
   <div class='title-image-darker temp' v-if="!isOverlapped"></div>
   <Transition>
-    <section class="title-image-darker card-content" v-if="isOverlapped && !isTextDummy">
-      <p>
-        文字と後ろの画像が被ってしまって少し読みにくいですね。<br>
-        そんな時は文字の色を白くしましょう。後ろの画像の色味が暗いため、それだけでかなり読みやすくなります。<br>
-        <br>
-        <button @click="titleDarker">色を変える</button>
-      </p>
+    <section class="title-image-darker card-dummy main-text transition" v-if="isOverlapped && !isTextDummy">
+      <div class='card-content'>
+        <p>
+          ……うーん、文字の色が画像の色に似ていて、読みにくさを感じます。<br>
+          <br>
+          色についても考えてみましょう。<br>
+          この画像は比較的暗い色が大部分なので、文字の色は明るい白色が適しています。<br>
+          <br>
+          <button @click="titleDarker">色を変える</button>
+        </p>
+      </div>
+      <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isTitleDarked && isOverlapped && !isTextDummy"></navigatorText><br>
     </section>
   </Transition>
+  
+  <Transition>
+
+    <section class="card-dummy main-text transition" v-if="isTitleDarked && isOverlapped && !isTextDummy">
+      <div class="card-content">
+        <p>
+          いいですね！<br>
+          これで、文字と背景のコントラストが上がり、よりオシャレかつ視認性の高いデザインになりました。<br>
+          <br>
+        </p>
+      </div>
+    </section>
+  </Transition>
+  <Transition>
+    <section class="card-dummy main-text transition" v-if="isTitleDarked && isOverlapped && !isTextDummy">
+      <div class="card-content">
+        <p>
+          次は、本文にちょっとリッチな装飾をつけてみます。<br>
+          <br>
+          <a href="https://bulma.io">Bulma</a>というライブラリ(Webページを作るうえでのパーツ集のようなもの)を使ってみましょう。<br>
+          本文に<a href='https://bulma.io/documentation/components/card/'>Card</a>というパーツを適用します。
+        </p>
+        <button @click="toCard">適用</button>
+      </div>
+    </section>
+  </Transition>
+  <Template>
+    
+  </Template>
 </template>
 
 <style lang="scss">
