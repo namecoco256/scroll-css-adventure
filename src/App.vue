@@ -17,7 +17,7 @@ const isTextDummy = ref(true)
 function fontBigger() {
   const p = document.querySelectorAll('#text-dummy p');
   for (let i = 0; i < p.length; i++) {
-    p[i].style.fontSize = '1em'
+    p[i].style.fontSize = '1.05em'
     // text[i].removeAttribute('id')
   }
   textDummyFlags.value[0] = true
@@ -170,15 +170,15 @@ watch(textDummyFlags, () => {
         <br>
         みなさん、こんにちは。初めまして。<br>
         <br>
-        突然ですが、今このページを開いてみて、みなさんはどんな感想を抱きましたか？<br>
-        おそらく、「ダサい」「味気ない」「文字が読みにくい」……など、いろいろとネガティブな感想が浮かんだかもしれません。<br>
+        突然ですが、今このページを開いてみて、みなさんはどのような感想を抱きましたか？<br>
+        おそらく、「ダサい」「味気ない」「文字が読みにくい」といった、ネガティブな感想が浮かんだことでしょう。<br>
         <br>
         それもそのはず。今このページは<b>CSS</b>と呼ばれるファイルが<b>一切設定されていない</b>状態です。<br>
         <br>
-        CSSは、ホームページなどのWeb上で見ることができるほぼすべてのデザインを設定するためのファイルのことです。<br>
+        CSSは、ウェブページやホームページのデザインを整えるためのファイルで、ほぼすべてのデザイン要素を制御しています。<br>
         <br>
-        ……と、そんなことを言われてもあまりピンと来ませんね。<br>
-        なので、今からこのページに実際にCSSを追加していき、CSSがどのようなはたらきをしているのか一緒に見てみましょう！<br>
+        ……と、いきなりこのような説明をされても理解しきれないかもしれません。<br>
+        今からこのページに実際にCSSを追加しながら、CSSがデザインにどのような影響を及ぼすのか一緒に見ていきましょう！<br>
         <br>
       </p>
     </div>
@@ -189,8 +189,8 @@ watch(textDummyFlags, () => {
       <p>
         <br>
         まずは文字が読みにくいのをどうにかしたいですね。<br>
-        文字の可読性はすなわち<b>Webページの命！</b><br>
-        ですのでひとまずこちらを最優先で進めていきましょう！<br>
+        文字の可読性はすなわち<b>Webページの命です。</b><br>
+        ですのでこちらを最優先で進めていきましょう！<br>
         <br>
         このページの文字の可読性を下げている大きな要因として以下の3つが挙げられます。<br>
         <br>
@@ -205,11 +205,11 @@ watch(textDummyFlags, () => {
         ひとつずつ修正していきましょう。<br>
         <br>
         <br>
-        <button @click="fontBigger">文字を大きくする</button><br>
+        <button class='transition' @click="fontBigger">文字を大きくする</button><br>
         <br>
-        <button @click="makeLineHeight">行間を開ける</button><br>
+        <button class='transition' @click="makeLineHeight">行間を開ける</button><br>
         <br>
-        <button @click="addCardClass">文字を少し動かす</button><br>
+        <button class='transition' @click="addCardClass">文字を少し動かす</button><br>
         <br>
         
       </p>
@@ -227,7 +227,7 @@ watch(textDummyFlags, () => {
           <br>
           具体的にどのような変更を加えたか解説していきます。<br>
           <br>
-          まず、そのためには<b>HTML</b>どのようなものなのかを軽く知っている必要があります。<br>
+          まず、そのためには<b>HTML</b>どのようなものなのかを軽く知っておく必要があります。<br>
           <br>
         </p>
       </div>
@@ -239,7 +239,7 @@ watch(textDummyFlags, () => {
         <h1 class="title is-3">HTMLについて</h1>
         <p>
           HTMLは、ウェブページの構造を設定するためのファイル形式です。<br>
-          CSSが家の内装や装飾にたとえるなら、HTMLはその家の骨組みに相当します。<br>
+          CSSを家の内装や装飾にたとえるなら、HTMLはその家の骨組みに相当します。<br>
           <br>
           このページのHTMLファイルは以下のようになっています。<br>
           <br>
@@ -324,7 +324,7 @@ watch(textDummyFlags, () => {
       <br>
       タイトル名と画像の配置が大幅にずれているので、これらを重ねて配置しましょう。<br>
       <br>
-      <button @click="titleOverlap">重ねる</button>
+      <button class='transition' @click="titleOverlap">重ねる</button>
     </p>
     <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isOverlapped && isTextDummy"></navigatorText><br>
     </div>
@@ -339,7 +339,7 @@ watch(textDummyFlags, () => {
           色についても考えてみましょう。<br>
           この画像は比較的暗い色が大部分なので、文字の色には明るい白色が適しています。<br>
           <br>
-          <button @click="titleDarker">色を変える</button>
+          <button class='transition' @click="titleDarker">色を変える</button>
         </p>
       </div>
       <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isTitleDarked && isOverlapped && !isTextDummy"></navigatorText><br>
@@ -368,7 +368,7 @@ watch(textDummyFlags, () => {
           試しに枠線だけのシンプルなデザインのものにしてみます。<br>
           <br>
         </p>
-        <button @click="changeButton">ボタンを変える</button>
+        <button class='transition' @click="changeButton">ボタンを変える</button>
       </div>
       <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isChangeButton && isTitleDarked && isOverlapped && !isTextDummy"></navigatorText><br>
     </section>
