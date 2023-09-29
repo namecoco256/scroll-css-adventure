@@ -17,7 +17,7 @@ const isTextDummy = ref(true)
 function fontBigger() {
   const p = document.querySelectorAll('#text-dummy p');
   for (let i = 0; i < p.length; i++) {
-    p[i].style.fontSize = '1.05em'
+    p[i].style.fontSize = '1em'
     // text[i].removeAttribute('id')
   }
   textDummyFlags.value[0] = true
@@ -94,52 +94,52 @@ function changeButton(){
 
 const isChangedButtonColor = ref(false)
 const selectedColor = ref('白黒')
-let currentColor = ''
+let currentColor = ref('')
 watch(selectedColor, ()=>{
   console.log(selectedColor)
   const button = document.querySelectorAll('button')
 
   for (let i = 0; i < button.length; i++) {
-    button[i].classList.remove('is-' + currentColor)
+    button[i].classList.remove('is-' + currentColor.value)
   }
   switch(selectedColor.value){
     case '白黒':
-      currentColor = ''
+      currentColor.value = ''
       break
     case '青緑':
-      currentColor = 'primary'
+      currentColor.value = 'primary'
       for (let i = 0; i < button.length; i++) {
-        button[i].classList.add('is-' + currentColor)
+        button[i].classList.add('is-' + currentColor.value)
       }
       break
     case '青':
-      currentColor = 'link'
+      currentColor.value = 'link'
       for (let i = 0; i < button.length; i++) {
-        button[i].classList.add('is-' + currentColor)
+        button[i].classList.add('is-' + currentColor.value)
       }
       break
     case '水色':
-      currentColor = 'info'
+      currentColor.value = 'info'
       for (let i = 0; i < button.length; i++) {
-        button[i].classList.add('is-' + currentColor)
+        button[i].classList.add('is-' + currentColor.value)
       }
       break
     case '緑':
-      currentColor = 'success'
+      currentColor.value = 'success'
       for (let i = 0; i < button.length; i++) {
-        button[i].classList.add('is-' + currentColor)
+        button[i].classList.add('is-' + currentColor.value)
       }
       break
     case '黄色':
-      currentColor = 'warning'
+      currentColor.value = 'warning'
       for (let i = 0; i < button.length; i++) {
-        button[i].classList.add('is-' + currentColor)
+        button[i].classList.add('is-' + currentColor.value)
       }
       break
     case '赤':
-      currentColor = 'danger'
+      currentColor.value = 'danger'
       for (let i = 0; i < button.length; i++) {
-        button[i].classList.add('is-' + currentColor)
+        button[i].classList.add('is-' + currentColor.value)
       }
       break
   }
@@ -229,7 +229,7 @@ function back(){
       <div class="card-content">
         <p>
           いかがでしょうか。<br>
-          まだまだ気になる点は沢山ありますが、いくらか読みやすくはなりました。<br>
+          すこし読みやすくなりました。<br>
           <br>
           具体的にどのような変更を加えたか解説していきます。<br>
           <br>
@@ -429,7 +429,7 @@ function back(){
           <br>
           このページを通じてWebコーディング、プログラミングに興味を持っていただけたならとても幸いです。<br>
           <br>
-          <button @click="back" :class="'transition button is-'+{currentColor}">一番上に戻る</button>
+          <button @click="back" :class="`transition button is-${currentColor}`">一番上に戻る</button>
           <br>
         </p>
       </div>
