@@ -86,8 +86,9 @@ function changeButton(){
   console.log(button)
   for (let i = 0; i < button.length; i++) {
     button[i].classList.add('button')
-    button[i].classList.add('is-outlined')
   }
+  const jumpTo = document.getElementsByClassName('changing-color')[0]
+  jumpTo.scrollIntoView({ behavior: 'smooth' })
   isChangeButton.value = true
 }
 
@@ -160,6 +161,11 @@ watch(textDummyFlags, () => {
     jumpTo.scrollIntoView({behavior: 'smooth'})
   }
 },{deep:true})
+
+function back(){
+  const jumpTo = document.getElementsByClassName('hero-body')[0]
+  jumpTo.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 
 <template>
@@ -373,8 +379,9 @@ watch(textDummyFlags, () => {
       <navigatorText text="(ボタンをクリックすると先に進みます)" v-if="!isChangeButton && isTitleDarked && isOverlapped && !isTextDummy"></navigatorText><br>
     </section>
   </Transition>
+  <div class="changing-color temp" v-if="!isChangeButton && isTitleDarked && isOverlapped && !isTextDummy"></div>
   <Transition>
-    <section class="main-text transition" v-if="isChangeButton && isTitleDarked && isOverlapped && !isTextDummy">
+    <section class="main-text transition changing-color" v-if="isChangeButton && isTitleDarked && isOverlapped && !isTextDummy">
       <div class="card-content">
         <p>
           どうでしょうか。<br>
@@ -401,12 +408,29 @@ watch(textDummyFlags, () => {
   <Transition>
     <section class="main-text transition" v-if="isChangedButtonColor && isChangeButton && isTitleDarked && isOverlapped && !isTextDummy">
       <div class="card-content">
-        <h1 class="title is-3">終わりに</h1>
         <p>
-          ここまでの閲覧、本当にありがとうございます。<br>
-          今このページの一番最初に戻ると、読みやすさが断然上がっていると思います。<br>
+          好みの色は見つかりましたか？<br>
+          少し色が変わるだけで、Webページの印象は大きく変わります。<br>
           <br>
-          このページを通じてWebデザインについて興味を持っていただけたならとても幸いです。
+          あなたの一番好きな色を探してみてください。
+        </p>
+      </div>
+    </section>
+  </Transition>
+  <Transition>
+    <section class="main-text transition" v-if="isChangedButtonColor && isChangeButton && isTitleDarked && isOverlapped && !isTextDummy">
+      <div class="card-content">
+        <h1 class='title is-3'>終わりに</h1>
+        <p>
+          お疲れさまでした！<br>
+          ここまでの閲覧、本当にありがとうございます。<br>
+          <br>
+          一度このページの一番上まで戻っていただくと、最初と比べはるかに読みやすくなっていることを実感できると思います。<br>
+          <br>
+          このページを通じてWebコーディング、プログラミングに興味を持っていただけたならとても幸いです。<br>
+          <br>
+          <button @click="back" :class="'transition button is-'+{currentColor}">一番上に戻る</button>
+          <br>
         </p>
       </div>
     </section>
