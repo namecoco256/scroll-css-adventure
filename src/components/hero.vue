@@ -7,7 +7,7 @@
           動きで学ぶWebデザイン
         </h1>
         <h2 class="subtitle is-3 transition">
-          CSS編
+          CSSのはたらき
         </h2>
       </div>
     </div>
